@@ -32,7 +32,7 @@ public class AuthService {
         return AuthResponse.builder().token(token).build();
     }
 
-    public AuthResponse login(AuthRequest request) {
+    public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         User user = userRepository.findByEmailIgnoreCase(request.getEmail()).orElseThrow(UserNotFoundException::new);
         String token = jwtService.generateToken(user);

@@ -3,8 +3,8 @@ package nabil.springsecuritydemo.controllers;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import nabil.springsecuritydemo.config.AuthService;
-import nabil.springsecuritydemo.entities.AuthRequest;
 import nabil.springsecuritydemo.entities.AuthResponse;
+import nabil.springsecuritydemo.entities.LoginRequest;
 import nabil.springsecuritydemo.entities.RegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody @NonNull AuthRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @NonNull LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
