@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nabil.springsecuritydemo.entities.*;
 import nabil.springsecuritydemo.exceptions.UserNotFoundException;
 import nabil.springsecuritydemo.repositories.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request) throws DataIntegrityViolationException {
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())

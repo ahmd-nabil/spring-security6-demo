@@ -6,6 +6,8 @@ import nabil.springsecuritydemo.config.AuthService;
 import nabil.springsecuritydemo.entities.AuthResponse;
 import nabil.springsecuritydemo.entities.LoginRequest;
 import nabil.springsecuritydemo.entities.RegisterRequest;
+import nabil.springsecuritydemo.exceptions.EmailTakenException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +24,11 @@ public class AuthController {
     private final AuthService authService;
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody @NonNull RegisterRequest request) {
-        return ResponseEntity.ok(authService.register(request));
+        try {
+            return ResponseEntity.ok(authService.register(request));
+        } catch (DataIntegrityViolationException e) {
+            throw new EmailTakenException();
+        }
     }
 
     @PostMapping("/login")
